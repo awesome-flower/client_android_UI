@@ -40,16 +40,16 @@ public class ThirdFragment extends Fragment{
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem("뚝섬","좋아요","15:42") ;
-        // 두 번째 아이템 추가.
         adapter.addItem("여의도","시원해요","18:40") ;
+        // 두 번째 아이템 추가.
+        adapter.addItem("뚝섬","좋아요","15:42") ;
         // 세 번째 아이템 추가.
         adapter.addItem("김포","대한민국의 베니스","07:07") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 1) {
+                if(position == 0) {
                     Intent intent = new Intent(getActivity(), FourthYeoui.class);
                     startActivity(intent);
                 }

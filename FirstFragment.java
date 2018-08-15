@@ -1,5 +1,6 @@
 package com.example.bbarroo.bottombar;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,15 @@ public class FirstFragment extends Fragment {
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.baseline_location_on_black_18dp), 12) ;
         // 세 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.baseline_motorcycle_black_18dp),4) ;
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0) {
+                    Intent intent = new Intent(getActivity(), ActivityActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
         return view;
 
     }
