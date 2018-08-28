@@ -7,23 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
-public class MFF_Main extends Fragment {
+public class MFF_Main extends android.support.v4.app.Fragment {
     public MFF_Main(){}
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.main_frag_1, container,false);
         ListView listview = view.findViewById(R.id.listview1);
-        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.main_frag_1,container,false);
         MFF_LVA adapter = new MFF_LVA() ;
         listview.setAdapter(adapter);
 

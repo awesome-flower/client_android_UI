@@ -1,82 +1,160 @@
 package com.example.bbarroo.awesome;
 
-import android.support.v4.app.FragmentStatePagerAdapter;
+
+import android.content.Context;
+import android.media.Image;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
 
-    ViewPager vp;
+import java.util.zip.Inflater;
+
+public class MainActivity extends AppCompatActivity{
+
+    MFF_Main fragment1;
+    MSF_Main fragment2;
+    MTF_Main fragment3;
+    MFOF_Main fragment4;
+    MFFF_Main fragment5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        vp = (ViewPager)findViewById(R.id.vp);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+        ImageButton toolbtn = (ImageButton) findViewById(R.id.toolbar_btn);
+
+        View actionbar = inflater.inflate(R.layout.toolbar, null);
+        actionBar.setCustomView(actionbar);
+        Toolbar parent = (Toolbar)actionbar.getParent();
+        parent.setContentInsetsAbsolute(0,0);
+        LayoutInflater inflater1 = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View toolb = inflater1.inflate(R.layout.toolbar, null);
+
+        fragment1 = new MFF_Main();
+        fragment2 = new MSF_Main();
+        fragment3 = new MTF_Main();
+        fragment4 = new MFOF_Main();
+        fragment5 = new MFFF_Main();
         LinearLayout btn_first = (LinearLayout)findViewById(R.id.button1);
         LinearLayout btn_second = (LinearLayout)findViewById(R.id.button2);
         LinearLayout btn_third = (LinearLayout)findViewById(R.id.button3);
         LinearLayout btn_fourth = (LinearLayout)findViewById(R.id.button4);
         LinearLayout btn_fifth = (LinearLayout)findViewById(R.id.button5);
+        final ImageView img1 = (ImageView)findViewById(R.id.firstimg);
+        final ImageView img2 = (ImageView)findViewById(R.id.secondimg);
+        final ImageView img3 = (ImageView)findViewById(R.id.thirdimg);
+        final ImageView img4 = (ImageView)findViewById(R.id.fourthimg);
+        final ImageView img5 = (ImageView)findViewById(R.id.fifthimg);
 
-        vp.setAdapter(new pagerAdapter(getSupportFragmentManager()));
-        vp.setCurrentItem(0);
-        btn_first.setOnClickListener(movePageListener);
-        btn_first.setTag(0);
-        btn_second.setOnClickListener(movePageListener);
-        btn_second.setTag(1);
-        btn_third.setOnClickListener(movePageListener);
-        btn_third.setTag(2);
-        btn_fourth.setOnClickListener(movePageListener);
-        btn_fourth.setTag(3);
-        btn_fifth.setOnClickListener(movePageListener);
-        btn_fifth.setTag(4);
 
-    }
-
-    View.OnClickListener movePageListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-            int tag = (int) v.getTag();
-            vp.setCurrentItem(tag);
-        }
-    };
-
-    private class pagerAdapter extends FragmentStatePagerAdapter
-    {
-        public pagerAdapter(android.support.v4.app.FragmentManager fm)
-        {
-            super(fm);
-        }
-        @Override
-        public android.support.v4.app.Fragment getItem(int position)
-        {
-            switch(position)
-            {
-                case 0:
-                    return new MFF_Main();
-                case 1:
-                    return new MSF_Main();
-                case 2:
-                    return new Bulletin_Main();
-                case 3:
-                    return new MFF_Main();
-                case 4:
-                    return new MFFF_Main();
-                default:
-                    return null;
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment,fragment1).commit();
+        btn_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tooltext = (TextView)toolb.findViewById(R.id.toolid);
+                tooltext.setText("홈");
+                img1.setImageResource(R.drawable.home_yes);
+                img2.setImageResource(R.drawable.activity_none);
+                img3.setImageResource(R.drawable.community_none);
+                img4.setImageResource(R.drawable.han_none);
+                img5.setImageResource(R.drawable.inform_none);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit(); // 여러개의 명을 만들어서 쓴다
+                // 꼭 commit 를 해주어야 실행이 된다. 플래그먼트 매니저가 플래그먼트를 담당 한다.
+                // add라고해서 추가를 해주지 않고 replace를 써주는데, 기존에 있던것들을 대체 해 주게 된다.
             }
-        }
-        @Override
-        public int getCount()
-        {
-            return 5;
-        }
+        });
+        btn_second.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tooltext = (TextView)toolb.findViewById(R.id.toolid);
+                tooltext.setText("액티비티");
+                img1.setImageResource(R.drawable.home_none);
+                img2.setImageResource(R.drawable.activity_yes);
+                img3.setImageResource(R.drawable.community_none);
+                img4.setImageResource(R.drawable.han_none);
+                img5.setImageResource(R.drawable.inform_none);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment2).commit(); // 여러개의 명을 만들어서 쓴다
+                // 꼭 commit 를 해주어야 실행이 된다. 플래그먼트 매니저가 플래그먼트를 담당 한다.
+                // add라고해서 추가를 해주지 않고 replace를 써주는데, 기존에 있던것들을 대체 해 주게 된다.
+            }
+        });
+        btn_third.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tooltext = (TextView)toolb.findViewById(R.id.toolid);
+                tooltext.setText("커뮤니티");
+                img1.setImageResource(R.drawable.home_none);
+                img2.setImageResource(R.drawable.activity_none);
+                img3.setImageResource(R.drawable.community_yes);
+                img4.setImageResource(R.drawable.han_none);
+                img5.setImageResource(R.drawable.inform_none);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment3).commit(); // 여러개의 명을 만들어서 쓴다
+                // 꼭 commit 를 해주어야 실행이 된다. 플래그먼트 매니저가 플래그먼트를 담당 한다.
+                // add라고해서 추가를 해주지 않고 replace를 써주는데, 기존에 있던것들을 대체 해 주게 된다.
+            }
+        });
+        btn_fourth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tooltext = (TextView)toolb.findViewById(R.id.toolid);
+                tooltext.setText("한강 정보");
+                img1.setImageResource(R.drawable.home_none);
+                img2.setImageResource(R.drawable.activity_none);
+                img3.setImageResource(R.drawable.community_none);
+                img4.setImageResource(R.drawable.han_yes);
+                img5.setImageResource(R.drawable.inform_none);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment4).commit(); // 여러개의 명을 만들어서 쓴다
+                // 꼭 commit 를 해주어야 실행이 된다. 플래그먼트 매니저가 플래그먼트를 담당 한다.
+                // add라고해서 추가를 해주지 않고 replace를 써주는데, 기존에 있던것들을 대체 해 주게 된다.
+            }
+        });
+        btn_fifth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tooltext = (TextView)toolb.findViewById(R.id.toolid);
+                tooltext.setText("내 정보");
+                img1.setImageResource(R.drawable.home_none);
+                img2.setImageResource(R.drawable.activity_none);
+                img3.setImageResource(R.drawable.community_none);
+                img4.setImageResource(R.drawable.han_none);
+                img5.setImageResource(R.drawable.inform_yes);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment5).commit(); // 여러개의 명을 만들어서 쓴다
+                // 꼭 commit 를 해주어야 실행이 된다. 플래그먼트 매니저가 플래그먼트를 담당 한다.
+                // add라고해서 추가를 해주지 않고 replace를 써주는데, 기존에 있던것들을 대체 해 주게 된다.
+            }
+        });
+
+
+
+
     }
+
+
 }
